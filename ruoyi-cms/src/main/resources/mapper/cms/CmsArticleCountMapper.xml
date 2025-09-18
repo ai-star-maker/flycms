@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cms.mapper.CmsArticleCountMapper">
+    
+    <resultMap type="CmsArticleCount" id="CmsArticleCountResult">
+        <result property="countId"    column="count_id"    />
+        <result property="articleId"    column="article_id"    />
+        <result property="countDate"    column="count_date"    />
+        <result property="views"    column="views"    />
+        <result property="comments"    column="comments"    />
+        <result property="downloads"    column="downloads"    />
+        <result property="ups"    column="ups"    />
+        <result property="downs"    column="downs"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="extendS1"    column="extend_s1"    />
+        <result property="extendS2"    column="extend_s2"    />
+        <result property="extendI1"    column="extend_i1"    />
+        <result property="extendI2"    column="extend_i2"    />
+    </resultMap>
+
+    <sql id="selectCmsArticleCountVo">
+        select count_id, article_id, count_date, views, comments, downloads, ups, downs, remarks, extend_s1, extend_s2, extend_i1, extend_i2 from cms_article_count
+    </sql>
+
+    <select id="selectCmsArticleCountList" parameterType="CmsArticleCount" resultMap="CmsArticleCountResult">
+        <include refid="selectCmsArticleCountVo"/>
+        <where>  
+            <if test="articleId != null "> and article_id = #{articleId}</if>
+            <if test="countDate != null "> and count_date = #{countDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectCmsArticleCountByCountId" parameterType="Long" resultMap="CmsArticleCountResult">
+        <include refid="selectCmsArticleCountVo"/>
+        where count_id = #{countId}
+    </select>
+
+    <insert id="insertCmsArticleCount" parameterType="CmsArticleCount" useGeneratedKeys="true" keyProperty="countId">
+        insert into cms_article_count
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">article_id,</if>
+            <if test="countDate != null">count_date,</if>
+            <if test="views != null">views,</if>
+            <if test="comments != null">comments,</if>
+            <if test="downloads != null">downloads,</if>
+            <if test="ups != null">ups,</if>
+            <if test="downs != null">downs,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="extendS1 != null">extend_s1,</if>
+            <if test="extendS2 != null">extend_s2,</if>
+            <if test="extendI1 != null">extend_i1,</if>
+            <if test="extendI2 != null">extend_i2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">#{articleId},</if>
+            <if test="countDate != null">#{countDate},</if>
+            <if test="views != null">#{views},</if>
+            <if test="comments != null">#{comments},</if>
+            <if test="downloads != null">#{downloads},</if>
+            <if test="ups != null">#{ups},</if>
+            <if test="downs != null">#{downs},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="extendS1 != null">#{extendS1},</if>
+            <if test="extendS2 != null">#{extendS2},</if>
+            <if test="extendI1 != null">#{extendI1},</if>
+            <if test="extendI2 != null">#{extendI2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCmsArticleCount" parameterType="CmsArticleCount">
+        update cms_article_count
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="articleId != null">article_id = #{articleId},</if>
+            <if test="countDate != null">count_date = #{countDate},</if>
+            <if test="views != null">views = #{views},</if>
+            <if test="comments != null">comments = #{comments},</if>
+            <if test="downloads != null">downloads = #{downloads},</if>
+            <if test="ups != null">ups = #{ups},</if>
+            <if test="downs != null">downs = #{downs},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="extendS1 != null">extend_s1 = #{extendS1},</if>
+            <if test="extendS2 != null">extend_s2 = #{extendS2},</if>
+            <if test="extendI1 != null">extend_i1 = #{extendI1},</if>
+            <if test="extendI2 != null">extend_i2 = #{extendI2},</if>
+        </trim>
+        where count_id = #{countId}
+    </update>
+
+    <delete id="deleteCmsArticleCountByCountId" parameterType="Long">
+        delete from cms_article_count where count_id = #{countId}
+    </delete>
+
+    <delete id="deleteCmsArticleCountByCountIds" parameterType="String">
+        delete from cms_article_count where count_id in 
+        <foreach item="countId" collection="array" open="(" separator="," close=")">
+            #{countId}
+        </foreach>
+    </delete>
+</mapper>

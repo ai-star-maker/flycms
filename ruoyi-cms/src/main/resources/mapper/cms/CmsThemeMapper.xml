@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cms.mapper.CmsThemeMapper">
+    
+    <resultMap type="CmsTheme" id="CmsThemeResult">
+        <result property="themeId"    column="theme_id"    />
+        <result property="themeName"    column="theme_name"    />
+        <result property="themeStyle"    column="theme_style"    />
+        <result property="themeAuthor"    column="theme_author"    />
+        <result property="themeInfo"    column="theme_info"    />
+        <result property="themeVersion"    column="theme_version"    />
+        <result property="themeEnabled"    column="theme_enabled"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="themeUpdate"    column="theme_update"    />
+        <result property="themeTouch"    column="theme_touch"    />
+    </resultMap>
+
+    <sql id="selectCmsThemeVo">
+        select theme_id, theme_name, theme_style, theme_author, theme_info, theme_version, theme_enabled, create_by, create_time, update_by, update_time, theme_update, theme_touch from cms_theme
+    </sql>
+
+    <select id="selectCmsThemeList" parameterType="CmsTheme" resultMap="CmsThemeResult">
+        <include refid="selectCmsThemeVo"/>
+        <where>  
+            <if test="themeName != null  and themeName != ''"> and theme_name like concat('%', #{themeName}, '%')</if>
+            <if test="themeAuthor != null  and themeAuthor != ''"> and theme_author = #{themeAuthor}</if>
+            <if test="themeEnabled != null  and themeEnabled != ''"> and theme_enabled = #{themeEnabled}</if>
+        </where>
+    </select>
+    
+    <select id="selectCmsThemeByThemeId" parameterType="Long" resultMap="CmsThemeResult">
+        <include refid="selectCmsThemeVo"/>
+        where theme_id = #{themeId}
+    </select>
+
+    <insert id="insertCmsTheme" parameterType="CmsTheme" useGeneratedKeys="true" keyProperty="themeId">
+        insert into cms_theme
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="themeName != null and themeName != ''">theme_name,</if>
+            <if test="themeStyle != null">theme_style,</if>
+            <if test="themeAuthor != null">theme_author,</if>
+            <if test="themeInfo != null">theme_info,</if>
+            <if test="themeVersion != null">theme_version,</if>
+            <if test="themeEnabled != null and themeEnabled != ''">theme_enabled,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="themeUpdate != null and themeUpdate != ''">theme_update,</if>
+            <if test="themeTouch != null">theme_touch,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="themeName != null and themeName != ''">#{themeName},</if>
+            <if test="themeStyle != null">#{themeStyle},</if>
+            <if test="themeAuthor != null">#{themeAuthor},</if>
+            <if test="themeInfo != null">#{themeInfo},</if>
+            <if test="themeVersion != null">#{themeVersion},</if>
+            <if test="themeEnabled != null and themeEnabled != ''">#{themeEnabled},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="themeUpdate != null and themeUpdate != ''">#{themeUpdate},</if>
+            <if test="themeTouch != null">#{themeTouch},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCmsTheme" parameterType="CmsTheme">
+        update cms_theme
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="themeName != null and themeName != ''">theme_name = #{themeName},</if>
+            <if test="themeStyle != null">theme_style = #{themeStyle},</if>
+            <if test="themeAuthor != null">theme_author = #{themeAuthor},</if>
+            <if test="themeInfo != null">theme_info = #{themeInfo},</if>
+            <if test="themeVersion != null">theme_version = #{themeVersion},</if>
+            <if test="themeEnabled != null and themeEnabled != ''">theme_enabled = #{themeEnabled},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="themeUpdate != null and themeUpdate != ''">theme_update = #{themeUpdate},</if>
+            <if test="themeTouch != null">theme_touch = #{themeTouch},</if>
+        </trim>
+        where theme_id = #{themeId}
+    </update>
+
+    <delete id="deleteCmsThemeByThemeId" parameterType="Long">
+        delete from cms_theme where theme_id = #{themeId}
+    </delete>
+
+    <delete id="deleteCmsThemeByThemeIds" parameterType="String">
+        delete from cms_theme where theme_id in 
+        <foreach item="themeId" collection="array" open="(" separator="," close=")">
+            #{themeId}
+        </foreach>
+    </delete>
+</mapper>

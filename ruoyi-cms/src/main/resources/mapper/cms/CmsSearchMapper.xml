@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cms.mapper.CmsSearchMapper">
+    
+    <resultMap type="CmsSearch" id="CmsSearchResult">
+        <result property="searchId"    column="search_id"    />
+        <result property="siteCode"    column="site_code"    />
+        <result property="keyword"    column="keyword"    />
+        <result property="searchTimes"    column="search_times"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="extendS1"    column="extend_s1"    />
+        <result property="extendI1"    column="extend_i1"    />
+    </resultMap>
+
+    <sql id="selectCmsSearchVo">
+        select search_id, site_code, keyword, search_times, create_by, create_time, remarks, extend_s1, extend_i1 from cms_search
+    </sql>
+
+    <select id="selectCmsSearchList" parameterType="CmsSearch" resultMap="CmsSearchResult">
+        <include refid="selectCmsSearchVo"/>
+        <where>  
+            <if test="siteCode != null  and siteCode != ''"> and site_code = #{siteCode}</if>
+            <if test="keyword != null  and keyword != ''"> and keyword like concat('%', #{keyword}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectCmsSearchKeywordsGroupList" parameterType="CmsSearch" resultMap="CmsSearchResult">
+        SELECT keyword, SUM(search_times) AS times FROM cms_search
+        <where>
+            <if test="siteCode != null  and siteCode != ''"> and site_code = #{siteCode}</if>
+        </where>
+        GROUP BY keyword ORDER BY times DESC  LIMIT 8
+    </select>
+    
+    <select id="selectCmsSearchBySearchId" parameterType="Long" resultMap="CmsSearchResult">
+        <include refid="selectCmsSearchVo"/>
+        where search_id = #{searchId}
+    </select>
+
+    <insert id="insertCmsSearch" parameterType="CmsSearch" useGeneratedKeys="true" keyProperty="searchId">
+        insert into cms_search
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="siteCode != null and siteCode != ''">site_code,</if>
+            <if test="keyword != null and keyword != ''">keyword,</if>
+            <if test="searchTimes != null">search_times,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="extendS1 != null">extend_s1,</if>
+            <if test="extendI1 != null">extend_i1,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="siteCode != null and siteCode != ''">#{siteCode},</if>
+            <if test="keyword != null and keyword != ''">#{keyword},</if>
+            <if test="searchTimes != null">#{searchTimes},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="extendS1 != null">#{extendS1},</if>
+            <if test="extendI1 != null">#{extendI1},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCmsSearch" parameterType="CmsSearch">
+        update cms_search
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="siteCode != null and siteCode != ''">site_code = #{siteCode},</if>
+            <if test="keyword != null and keyword != ''">keyword = #{keyword},</if>
+            <if test="searchTimes != null">search_times = #{searchTimes},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="extendS1 != null">extend_s1 = #{extendS1},</if>
+            <if test="extendI1 != null">extend_i1 = #{extendI1},</if>
+        </trim>
+        where search_id = #{searchId}
+    </update>
+
+    <delete id="deleteCmsSearchBySearchId" parameterType="Long">
+        delete from cms_search where search_id = #{searchId}
+    </delete>
+
+    <delete id="deleteCmsSearchBySearchIds" parameterType="String">
+        delete from cms_search where search_id in 
+        <foreach item="searchId" collection="array" open="(" separator="," close=")">
+            #{searchId}
+        </foreach>
+    </delete>
+</mapper>

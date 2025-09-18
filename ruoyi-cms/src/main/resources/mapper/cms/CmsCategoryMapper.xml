@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cms.mapper.CmsCategoryMapper">
+    
+    <resultMap type="CmsCategory" id="CmsCategoryResult">
+        <result property="categoryId"    column="category_id"    />
+        <result property="categoryCode"    column="category_code"    />
+        <result property="parentCode"    column="parent_code"    />
+        <result property="ancestors"    column="ancestors"    />
+        <result property="categoryName"    column="category_name"    />
+        <result property="siteCode"    column="site_code"    />
+        <result property="moduleType"    column="module_type"    />
+        <result property="image"    column="image"    />
+        <result property="href"    column="href"    />
+        <result property="keywords"    column="keywords"    />
+        <result property="description"    column="description"    />
+        <result property="inMenu"    column="in_menu"    />
+        <result property="inList"    column="in_list"    />
+        <result property="showModes"    column="show_modes"    />
+        <result property="isNeedAudit"    column="is_need_audit"    />
+        <result property="isCanComment"    column="is_can_comment"    />
+        <result property="viewConfig"    column="view_config"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="extendS1"    column="extend_s1"    />
+        <result property="extendS2"    column="extend_s2"    />
+        <result property="extendI1"    column="extend_i1"    />
+        <result property="extendI2"    column="extend_i2"    />
+        <result property="extendF1"    column="extend_f1"    />
+        <result property="extendF2"    column="extend_f2"    />
+        <result property="extendD1"    column="extend_d1"    />
+        <result property="extendD2"    column="extend_d2"    />
+    </resultMap>
+
+    <sql id="selectCmsCategoryVo">
+        select category_id, category_code, parent_code, ancestors, category_name, site_code, module_type, image, href, keywords, description, in_menu, in_list, show_modes, is_need_audit, is_can_comment, view_config, status, create_by, create_time, update_by, update_time, remarks, extend_s1, extend_s2, extend_i1, extend_i2, extend_f1, extend_f2, extend_d1, extend_d2 from cms_category
+    </sql>
+
+    <select id="selectCmsCategoryList" parameterType="CmsCategory" resultMap="CmsCategoryResult">
+        <include refid="selectCmsCategoryVo"/>
+        <where>  
+            <if test="categoryCode != null  and categoryCode != ''"> and category_code = #{categoryCode}</if>
+            <if test="categoryName != null  and categoryName != ''"> and category_name like concat('%', #{categoryName}, '%')</if>
+            <if test="siteCode != null  and siteCode != ''"> and site_code = #{siteCode}</if>
+        </where>
+    </select>
+    
+    <select id="selectCmsCategoryByCategoryId" parameterType="Long" resultMap="CmsCategoryResult">
+        <include refid="selectCmsCategoryVo"/>
+        where category_id = #{categoryId}
+    </select>
+
+    <insert id="insertCmsCategory" parameterType="CmsCategory" useGeneratedKeys="true" keyProperty="categoryId">
+        insert into cms_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryCode != null and categoryCode != ''">category_code,</if>
+            <if test="parentCode != null and parentCode != ''">parent_code,</if>
+            <if test="ancestors != null">ancestors,</if>
+            <if test="categoryName != null and categoryName != ''">category_name,</if>
+            <if test="siteCode != null and siteCode != ''">site_code,</if>
+            <if test="moduleType != null">module_type,</if>
+            <if test="image != null">image,</if>
+            <if test="href != null">href,</if>
+            <if test="keywords != null">keywords,</if>
+            <if test="description != null">description,</if>
+            <if test="inMenu != null">in_menu,</if>
+            <if test="inList != null">in_list,</if>
+            <if test="showModes != null">show_modes,</if>
+            <if test="isNeedAudit != null">is_need_audit,</if>
+            <if test="isCanComment != null">is_can_comment,</if>
+            <if test="viewConfig != null">view_config,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="extendS1 != null">extend_s1,</if>
+            <if test="extendS2 != null">extend_s2,</if>
+            <if test="extendI1 != null">extend_i1,</if>
+            <if test="extendI2 != null">extend_i2,</if>
+            <if test="extendF1 != null">extend_f1,</if>
+            <if test="extendF2 != null">extend_f2,</if>
+            <if test="extendD1 != null">extend_d1,</if>
+            <if test="extendD2 != null">extend_d2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryCode != null and categoryCode != ''">#{categoryCode},</if>
+            <if test="parentCode != null and parentCode != ''">#{parentCode},</if>
+            <if test="ancestors != null">#{ancestors},</if>
+            <if test="categoryName != null and categoryName != ''">#{categoryName},</if>
+            <if test="siteCode != null and siteCode != ''">#{siteCode},</if>
+            <if test="moduleType != null">#{moduleType},</if>
+            <if test="image != null">#{image},</if>
+            <if test="href != null">#{href},</if>
+            <if test="keywords != null">#{keywords},</if>
+            <if test="description != null">#{description},</if>
+            <if test="inMenu != null">#{inMenu},</if>
+            <if test="inList != null">#{inList},</if>
+            <if test="showModes != null">#{showModes},</if>
+            <if test="isNeedAudit != null">#{isNeedAudit},</if>
+            <if test="isCanComment != null">#{isCanComment},</if>
+            <if test="viewConfig != null">#{viewConfig},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="extendS1 != null">#{extendS1},</if>
+            <if test="extendS2 != null">#{extendS2},</if>
+            <if test="extendI1 != null">#{extendI1},</if>
+            <if test="extendI2 != null">#{extendI2},</if>
+            <if test="extendF1 != null">#{extendF1},</if>
+            <if test="extendF2 != null">#{extendF2},</if>
+            <if test="extendD1 != null">#{extendD1},</if>
+            <if test="extendD2 != null">#{extendD2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCmsCategory" parameterType="CmsCategory">
+        update cms_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryCode != null and categoryCode != ''">category_code = #{categoryCode},</if>
+            <if test="parentCode != null and parentCode != ''">parent_code = #{parentCode},</if>
+            <if test="ancestors != null">ancestors = #{ancestors},</if>
+            <if test="categoryName != null and categoryName != ''">category_name = #{categoryName},</if>
+            <if test="siteCode != null and siteCode != ''">site_code = #{siteCode},</if>
+            <if test="moduleType != null">module_type = #{moduleType},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="href != null">href = #{href},</if>
+            <if test="keywords != null">keywords = #{keywords},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="inMenu != null">in_menu = #{inMenu},</if>
+            <if test="inList != null">in_list = #{inList},</if>
+            <if test="showModes != null">show_modes = #{showModes},</if>
+            <if test="isNeedAudit != null">is_need_audit = #{isNeedAudit},</if>
+            <if test="isCanComment != null">is_can_comment = #{isCanComment},</if>
+            <if test="viewConfig != null">view_config = #{viewConfig},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="extendS1 != null">extend_s1 = #{extendS1},</if>
+            <if test="extendS2 != null">extend_s2 = #{extendS2},</if>
+            <if test="extendI1 != null">extend_i1 = #{extendI1},</if>
+            <if test="extendI2 != null">extend_i2 = #{extendI2},</if>
+            <if test="extendF1 != null">extend_f1 = #{extendF1},</if>
+            <if test="extendF2 != null">extend_f2 = #{extendF2},</if>
+            <if test="extendD1 != null">extend_d1 = #{extendD1},</if>
+            <if test="extendD2 != null">extend_d2 = #{extendD2},</if>
+        </trim>
+        where category_id = #{categoryId}
+    </update>
+
+    <delete id="deleteCmsCategoryByCategoryId" parameterType="Long">
+        delete from cms_category where category_id = #{categoryId}
+    </delete>
+
+    <delete id="deleteCmsCategoryByCategoryIds" parameterType="String">
+        delete from cms_category where category_id in 
+        <foreach item="categoryId" collection="array" open="(" separator="," close=")">
+            #{categoryId}
+        </foreach>
+    </delete>
+</mapper>

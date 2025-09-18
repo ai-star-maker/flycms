@@ -1,0 +1,61 @@
+package com.ruoyi.cms.service;
+
+import java.util.List;
+import com.ruoyi.cms.domain.CmsThemeConfig;
+
+/**
+ * 主题配置Service接口
+ * 
+ * @author ruoyi
+ * @date 2025-08-24
+ */
+public interface ICmsThemeConfigService 
+{
+    /**
+     * 查询主题配置
+     * 
+     * @param configId 主题配置主键
+     * @return 主题配置
+     */
+    public CmsThemeConfig selectCmsThemeConfigByConfigId(Long configId);
+
+    /**
+     * 查询主题配置列表
+     * 
+     * @param cmsThemeConfig 主题配置
+     * @return 主题配置集合
+     */
+    public List<CmsThemeConfig> selectCmsThemeConfigList(CmsThemeConfig cmsThemeConfig);
+
+    /**
+     * 新增主题配置
+     * 
+     * @param cmsThemeConfig 主题配置
+     * @return 结果
+     */
+    public int insertCmsThemeConfig(CmsThemeConfig cmsThemeConfig);
+
+    /**
+     * 修改主题配置
+     * 
+     * @param cmsThemeConfig 主题配置
+     * @return 结果
+     */
+    public int updateCmsThemeConfig(CmsThemeConfig cmsThemeConfig);
+
+    /**
+     * 批量删除主题配置
+     * 
+     * @param configIds 需要删除的主题配置主键集合
+     * @return 结果
+     */
+    public int deleteCmsThemeConfigByConfigIds(Long[] configIds);
+
+    /**
+     * 删除主题配置信息
+     * 
+     * @param configId 主题配置主键
+     * @return 结果
+     */
+    public int deleteCmsThemeConfigByConfigId(Long configId);
+}
