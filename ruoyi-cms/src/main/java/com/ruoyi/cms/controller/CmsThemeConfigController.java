@@ -25,10 +25,10 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 主题配置Controller
  * 
  * @author ruoyi
- * @date 2025-08-24
+ * @date 2025-09-19
  */
 @RestController
-@RequestMapping("/cms/config")
+@RequestMapping("/cms/themeConfig")
 public class CmsThemeConfigController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class CmsThemeConfigController extends BaseController
     /**
      * 查询主题配置列表
      */
-    @PreAuthorize("@ss.hasPermi('cms:config:list')")
+    @PreAuthorize("@ss.hasPermi('cms:themeConfig:list')")
     @GetMapping("/list")
     public TableDataInfo list(CmsThemeConfig cmsThemeConfig)
     {
@@ -49,7 +49,7 @@ public class CmsThemeConfigController extends BaseController
     /**
      * 导出主题配置列表
      */
-    @PreAuthorize("@ss.hasPermi('cms:config:export')")
+    @PreAuthorize("@ss.hasPermi('cms:themeConfig:export')")
     @Log(title = "主题配置", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CmsThemeConfig cmsThemeConfig)
@@ -62,7 +62,7 @@ public class CmsThemeConfigController extends BaseController
     /**
      * 获取主题配置详细信息
      */
-    @PreAuthorize("@ss.hasPermi('cms:config:query')")
+    @PreAuthorize("@ss.hasPermi('cms:themeConfig:query')")
     @GetMapping(value = "/{configId}")
     public AjaxResult getInfo(@PathVariable("configId") Long configId)
     {
@@ -72,7 +72,7 @@ public class CmsThemeConfigController extends BaseController
     /**
      * 新增主题配置
      */
-    @PreAuthorize("@ss.hasPermi('cms:config:add')")
+    @PreAuthorize("@ss.hasPermi('cms:themeConfig:add')")
     @Log(title = "主题配置", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CmsThemeConfig cmsThemeConfig)
@@ -83,7 +83,7 @@ public class CmsThemeConfigController extends BaseController
     /**
      * 修改主题配置
      */
-    @PreAuthorize("@ss.hasPermi('cms:config:edit')")
+    @PreAuthorize("@ss.hasPermi('cms:themeConfig:edit')")
     @Log(title = "主题配置", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CmsThemeConfig cmsThemeConfig)
@@ -94,7 +94,7 @@ public class CmsThemeConfigController extends BaseController
     /**
      * 删除主题配置
      */
-    @PreAuthorize("@ss.hasPermi('cms:config:remove')")
+    @PreAuthorize("@ss.hasPermi('cms:themeConfig:remove')")
     @Log(title = "主题配置", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{configIds}")
     public AjaxResult remove(@PathVariable Long[] configIds)

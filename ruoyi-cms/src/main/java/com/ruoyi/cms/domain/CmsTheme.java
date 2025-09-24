@@ -5,6 +5,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 网站主题对象 cms_theme
  * 
@@ -47,6 +50,10 @@ public class CmsTheme extends BaseEntity
 
     /** 联系方式 */
     private String themeTouch;
+
+
+    /** 配置信息 */
+    private Map<String, String> configs;
 
     public void setThemeId(Long themeId) 
     {
@@ -136,6 +143,14 @@ public class CmsTheme extends BaseEntity
     public String getThemeTouch() 
     {
         return themeTouch;
+    }
+
+    public Map<String, String> getConfigs() {
+        return configs;
+    }
+
+    public void setConfigs(Map<String, String> configs) {
+        this.configs = configs;
     }
 
     @Override

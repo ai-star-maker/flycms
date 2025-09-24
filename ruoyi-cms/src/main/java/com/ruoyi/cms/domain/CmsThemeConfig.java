@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 主题配置对象 cms_theme_config
  * 
  * @author ruoyi
- * @date 2025-08-24
+ * @date 2025-09-19
  */
 public class CmsThemeConfig extends BaseEntity
 {
@@ -18,9 +18,9 @@ public class CmsThemeConfig extends BaseEntity
     /** 配置编号 */
     private Long configId;
 
-    /** 主题编号 */
-    @Excel(name = "主题编号")
-    private Long themeId;
+    /** 主题名称 */
+    @Excel(name = "主题名称")
+    private String themeName;
 
     /** 配置名称 */
     @Excel(name = "配置名称")
@@ -30,12 +30,11 @@ public class CmsThemeConfig extends BaseEntity
     @Excel(name = "配置值")
     private String configValue;
 
-    /** 状态（0正常 1删除 2停用） */
-    @Excel(name = "状态", readConverterExp = "0=正常,1=删除,2=停用")
+    /** 状态 */
+    @Excel(name = "状态")
     private String status;
 
     /** 备注信息 */
-    @Excel(name = "备注信息")
     private String remarks;
 
     public void setConfigId(Long configId) 
@@ -48,14 +47,14 @@ public class CmsThemeConfig extends BaseEntity
         return configId;
     }
 
-    public void setThemeId(Long themeId) 
+    public void setThemeName(String themeName) 
     {
-        this.themeId = themeId;
+        this.themeName = themeName;
     }
 
-    public Long getThemeId() 
+    public String getThemeName() 
     {
-        return themeId;
+        return themeName;
     }
 
     public void setConfigName(String configName) 
@@ -102,7 +101,7 @@ public class CmsThemeConfig extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("configId", getConfigId())
-            .append("themeId", getThemeId())
+            .append("themeName", getThemeName())
             .append("configName", getConfigName())
             .append("configValue", getConfigValue())
             .append("status", getStatus())

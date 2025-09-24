@@ -1,8 +1,13 @@
 package com.ruoyi.cms.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.cms.domain.CmsCategory;
+import com.ruoyi.cms.domain.CmsThemeConfig;
+import com.ruoyi.cms.service.ICmsThemeConfigService;
 import com.ruoyi.common.annotation.Anonymous;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +40,42 @@ public class CmsThemeController extends BaseController
 {
     @Autowired
     private ICmsThemeService cmsThemeService;
+    @Autowired
+    private ICmsThemeConfigService cmsThemeConfigService;
 
     /**
      * 查询网站主题列表
      */
-    @Anonymous
+    @PreAuthorize("@ss.hasPermi('cms:theme:list')")
     @GetMapping("/list")
     public TableDataInfo list(CmsTheme cmsTheme)
     {
         startPage();
         List<CmsTheme> list = cmsThemeService.selectCmsThemeList(cmsTheme);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询网站主题列表和配置信息
+     */
+    @Anonymous
+    @GetMapping("/config")
+    public TableDataInfo config(CmsTheme cmsTheme)
+    {
+        startPage();
+        List<CmsTheme> list = cmsThemeService.selectCmsThemeList(cmsTheme);
+        CmsThemeConfig themeConfig = new CmsThemeConfig();
+        themeConfig.setStatus("0");
+        List<CmsThemeConfig> configs = cmsThemeConfigService.selectCmsThemeConfigList(themeConfig);
+        list.forEach((theme) -> {
+            Map<String, String> kv = new HashMap<>();
+            configs.forEach((config) -> {
+                if (theme.getThemeName().equals(config.getThemeName())) {
+                    kv.put(config.getConfigName(), config.getConfigValue());
+                }
+            });
+            theme.setConfigs(kv);
+        });
         return getDataTable(list);
     }
 

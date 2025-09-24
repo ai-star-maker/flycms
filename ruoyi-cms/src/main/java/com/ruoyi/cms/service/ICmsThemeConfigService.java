@@ -7,7 +7,7 @@ import com.ruoyi.cms.domain.CmsThemeConfig;
  * 主题配置Service接口
  * 
  * @author ruoyi
- * @date 2025-08-24
+ * @date 2025-09-19
  */
 public interface ICmsThemeConfigService 
 {
